@@ -1,0 +1,15 @@
+﻿body {
+}
+
+/* Cabecera */
+#logoCabecera
+{
+	background: transparent url(Images/logoESAN50anios.png);
+	width: 175px;
+	height: 54px;
+}
+
+.fondoGradiente
+{
+	background: url("Images/fondoGradiente.jpg") repeat-x;
+}

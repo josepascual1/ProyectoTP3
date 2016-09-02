@@ -1,0 +1,69 @@
+﻿@{
+
+    var lista = ViewBag.Lista as List<Innova.Models.GestionPedagogica.ListaCompetenciaCapadidadArea>;
+}
+
+
+<table id="myTableAsesor" class="table table-bordered">
+
+    <thead>
+        <tr>
+            <th>Area curricular</th>
+            <th>Competencia</th>
+            <th>Capacidades</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+
+        @{
+            System.Diagnostics.Debug.Assert(lista != null, "lista != null");
+        }
+        @foreach (var item in lista)
+        {
+            <tr class="filaCompetenciaxArea" pidcurriculabasecompetencia="@(item.idCurriculaBaseCompetencia)">
+                <td>
+                    <div>
+                        @item.areaCurricular
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        @item.competencia
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        @item.capacidad
+                    </div>
+                </td>
+                <td>
+                    <div class="eliminarCompetenciaCapacidadArea" data-toggle="tooltip" data-placement="top" title="Eliminar competencias y capacidades">
+                        <img src="~/Content/Images/eliminar.png" alt="Competencia Capacidad Area" />
+                    </div>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+
+</table>
+
+<script type="text/javascript">
+
+    $(".eliminarCompetenciaCapacidadArea").on("click", function () {
+        var objeto = $(this);
+        var id = $(this).parents(".filaCompetenciaxArea").attr("pidcurriculabasecompetencia");
+        $.post('@Url.Action("ElininarCompetenciaxArea", "Curricula")', { idCurriculaBaseCompetencia: id }, function (data) {
+            var obj = jQuery.parseJSON(data);
+            if (obj) {
+                objeto.parents(".filaCompetenciaxArea").hide("slow");
+            } else {
+                alert('Se presentaron incoveniente al eliminar el registro');
+            }
+        ssss});
+    });
+
+</script>

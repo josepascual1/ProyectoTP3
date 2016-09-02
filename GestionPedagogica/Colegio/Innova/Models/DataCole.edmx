@@ -1,0 +1,926 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="InnovaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AreaCurricular">
+          <Key>
+            <PropertyRef Name="IdAreaCurricular" />
+          </Key>
+          <Property Name="IdAreaCurricular" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Capacidad">
+          <Key>
+            <PropertyRef Name="IdCapacidad" />
+          </Key>
+          <Property Name="IdCapacidad" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="IdCompetencia" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Competencia">
+          <Key>
+            <PropertyRef Name="IdCompetencia" />
+          </Key>
+          <Property Name="IdCompetencia" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Curricula">
+          <Key>
+            <PropertyRef Name="IdCurricula" />
+          </Key>
+          <Property Name="IdCurricula" Type="int" Nullable="false" />
+          <Property Name="IdNivel" Type="int" />
+          <Property Name="IdCurriculaBase" Type="int" />
+          <Property Name="Estado" Type="int" />
+        </EntityType>
+        <EntityType Name="CurriculaBase">
+          <Key>
+            <PropertyRef Name="IdCurriculaBase" />
+          </Key>
+          <Property Name="IdCurriculaBase" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Año" Type="int" Nullable="false" />
+          <Property Name="NumeroResolucion" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="1000" />
+          <Property Name="Vigencia" Type="bit" />
+        </EntityType>
+        <EntityType Name="CurriculaBaseCompetencia">
+          <Key>
+            <PropertyRef Name="IdCurriculaBaseCompetencia" />
+          </Key>
+          <Property Name="IdCurriculaBaseCompetencia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdCurriculaBase" Type="int" Nullable="false" />
+          <Property Name="IdCompetencia" Type="int" Nullable="false" />
+          <Property Name="IdAreaCurricular" Type="int" />
+        </EntityType>
+        <EntityType Name="Curso">
+          <Key>
+            <PropertyRef Name="IdCurso" />
+          </Key>
+          <Property Name="IdCurso" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Descripción" Type="varchar" MaxLength="200" />
+          <Property Name="IdGrado" Type="int" Nullable="false" />
+          <Property Name="IdAreaCurricular" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DetalleCurricula">
+          <Key>
+            <PropertyRef Name="IdDetalleCurricula" />
+          </Key>
+          <Property Name="IdCurricula" Type="int" Nullable="false" />
+          <Property Name="IdDetalleCurricula" Type="int" Nullable="false" />
+          <Property Name="IdCompetencia" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Docente">
+          <Key>
+            <PropertyRef Name="IdDocente" />
+          </Key>
+          <Property Name="IdDocente" Type="int" Nullable="false" />
+          <Property Name="Nombres" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Apellidos" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="DocenteCurso">
+          <Key>
+            <PropertyRef Name="IdDocente" />
+            <PropertyRef Name="IdCurso" />
+          </Key>
+          <Property Name="IdDocente" Type="int" Nullable="false" />
+          <Property Name="IdCurso" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Grado">
+          <Key>
+            <PropertyRef Name="IdGrado" />
+          </Key>
+          <Property Name="IdGrado" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="200" />
+          <Property Name="IdNivel" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nivel">
+          <Key>
+            <PropertyRef Name="IdNivel" />
+          </Key>
+          <Property Name="IdNivel" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="PlanEstudiosBase">
+          <Key>
+            <PropertyRef Name="IdCurriculaBaseCompetencia" />
+            <PropertyRef Name="IdCurso" />
+          </Key>
+          <Property Name="IdCurriculaBaseCompetencia" Type="int" Nullable="false" />
+          <Property Name="IdCurso" Type="int" Nullable="false" />
+          <Property Name="Horas" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_Capacidad_Competencia">
+          <End Role="Competencia" Type="Self.Competencia" Multiplicity="1" />
+          <End Role="Capacidad" Type="Self.Capacidad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Competencia">
+              <PropertyRef Name="IdCompetencia" />
+            </Principal>
+            <Dependent Role="Capacidad">
+              <PropertyRef Name="IdCompetencia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Curricula_CurriculaBase">
+          <End Role="CurriculaBase" Type="Self.CurriculaBase" Multiplicity="0..1" />
+          <End Role="Curricula" Type="Self.Curricula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CurriculaBase">
+              <PropertyRef Name="IdCurriculaBase" />
+            </Principal>
+            <Dependent Role="Curricula">
+              <PropertyRef Name="IdCurriculaBase" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Curricula_Nivel">
+          <End Role="Nivel" Type="Self.Nivel" Multiplicity="0..1" />
+          <End Role="Curricula" Type="Self.Curricula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nivel">
+              <PropertyRef Name="IdNivel" />
+            </Principal>
+            <Dependent Role="Curricula">
+              <PropertyRef Name="IdNivel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CurriculaBaseCompetencia_AreaCurricular">
+          <End Role="AreaCurricular" Type="Self.AreaCurricular" Multiplicity="0..1" />
+          <End Role="CurriculaBaseCompetencia" Type="Self.CurriculaBaseCompetencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AreaCurricular">
+              <PropertyRef Name="IdAreaCurricular" />
+            </Principal>
+            <Dependent Role="CurriculaBaseCompetencia">
+              <PropertyRef Name="IdAreaCurricular" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CurriculaBaseCompetencia_Competencia">
+          <End Role="Competencia" Type="Self.Competencia" Multiplicity="1" />
+          <End Role="CurriculaBaseCompetencia" Type="Self.CurriculaBaseCompetencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Competencia">
+              <PropertyRef Name="IdCompetencia" />
+            </Principal>
+            <Dependent Role="CurriculaBaseCompetencia">
+              <PropertyRef Name="IdCompetencia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CurriculaBaseCompetencia_CurriculaBase">
+          <End Role="CurriculaBase" Type="Self.CurriculaBase" Multiplicity="1" />
+          <End Role="CurriculaBaseCompetencia" Type="Self.CurriculaBaseCompetencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CurriculaBase">
+              <PropertyRef Name="IdCurriculaBase" />
+            </Principal>
+            <Dependent Role="CurriculaBaseCompetencia">
+              <PropertyRef Name="IdCurriculaBase" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Curso_AreaCurricular">
+          <End Role="AreaCurricular" Type="Self.AreaCurricular" Multiplicity="1" />
+          <End Role="Curso" Type="Self.Curso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AreaCurricular">
+              <PropertyRef Name="IdAreaCurricular" />
+            </Principal>
+            <Dependent Role="Curso">
+              <PropertyRef Name="IdAreaCurricular" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Curso_Grado">
+          <End Role="Grado" Type="Self.Grado" Multiplicity="1" />
+          <End Role="Curso" Type="Self.Curso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grado">
+              <PropertyRef Name="IdGrado" />
+            </Principal>
+            <Dependent Role="Curso">
+              <PropertyRef Name="IdGrado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleCurricula_Competencia">
+          <End Role="Competencia" Type="Self.Competencia" Multiplicity="1" />
+          <End Role="DetalleCurricula" Type="Self.DetalleCurricula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Competencia">
+              <PropertyRef Name="IdCompetencia" />
+            </Principal>
+            <Dependent Role="DetalleCurricula">
+              <PropertyRef Name="IdCompetencia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleCurricula_Curricula">
+          <End Role="Curricula" Type="Self.Curricula" Multiplicity="1" />
+          <End Role="DetalleCurricula" Type="Self.DetalleCurricula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Curricula">
+              <PropertyRef Name="IdCurricula" />
+            </Principal>
+            <Dependent Role="DetalleCurricula">
+              <PropertyRef Name="IdCurricula" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DocenteCurso_Curso">
+          <End Role="Curso" Type="Self.Curso" Multiplicity="1" />
+          <End Role="DocenteCurso" Type="Self.DocenteCurso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Curso">
+              <PropertyRef Name="IdCurso" />
+            </Principal>
+            <Dependent Role="DocenteCurso">
+              <PropertyRef Name="IdCurso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DocenteCurso_Docente">
+          <End Role="Docente" Type="Self.Docente" Multiplicity="1" />
+          <End Role="DocenteCurso" Type="Self.DocenteCurso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Docente">
+              <PropertyRef Name="IdDocente" />
+            </Principal>
+            <Dependent Role="DocenteCurso">
+              <PropertyRef Name="IdDocente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Grado_Nivel">
+          <End Role="Nivel" Type="Self.Nivel" Multiplicity="1" />
+          <End Role="Grado" Type="Self.Grado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nivel">
+              <PropertyRef Name="IdNivel" />
+            </Principal>
+            <Dependent Role="Grado">
+              <PropertyRef Name="IdNivel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlanEstudiosBase_CurriculaBaseCompetencia">
+          <End Role="CurriculaBaseCompetencia" Type="Self.CurriculaBaseCompetencia" Multiplicity="1" />
+          <End Role="PlanEstudiosBase" Type="Self.PlanEstudiosBase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CurriculaBaseCompetencia">
+              <PropertyRef Name="IdCurriculaBaseCompetencia" />
+            </Principal>
+            <Dependent Role="PlanEstudiosBase">
+              <PropertyRef Name="IdCurriculaBaseCompetencia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlanEstudiosBase_Curso">
+          <End Role="Curso" Type="Self.Curso" Multiplicity="1" />
+          <End Role="PlanEstudiosBase" Type="Self.PlanEstudiosBase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Curso">
+              <PropertyRef Name="IdCurso" />
+            </Principal>
+            <Dependent Role="PlanEstudiosBase">
+              <PropertyRef Name="IdCurso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="InnovaModelStoreContainer">
+          <EntitySet Name="AreaCurricular" EntityType="Self.AreaCurricular" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Capacidad" EntityType="Self.Capacidad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Competencia" EntityType="Self.Competencia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Curricula" EntityType="Self.Curricula" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CurriculaBase" EntityType="Self.CurriculaBase" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CurriculaBaseCompetencia" EntityType="Self.CurriculaBaseCompetencia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Curso" EntityType="Self.Curso" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DetalleCurricula" EntityType="Self.DetalleCurricula" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Docente" EntityType="Self.Docente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DocenteCurso" EntityType="Self.DocenteCurso" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Grado" EntityType="Self.Grado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Nivel" EntityType="Self.Nivel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PlanEstudiosBase" EntityType="Self.PlanEstudiosBase" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Capacidad_Competencia" Association="Self.FK_Capacidad_Competencia">
+            <End Role="Competencia" EntitySet="Competencia" />
+            <End Role="Capacidad" EntitySet="Capacidad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Curricula_CurriculaBase" Association="Self.FK_Curricula_CurriculaBase">
+            <End Role="CurriculaBase" EntitySet="CurriculaBase" />
+            <End Role="Curricula" EntitySet="Curricula" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Curricula_Nivel" Association="Self.FK_Curricula_Nivel">
+            <End Role="Nivel" EntitySet="Nivel" />
+            <End Role="Curricula" EntitySet="Curricula" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CurriculaBaseCompetencia_AreaCurricular" Association="Self.FK_CurriculaBaseCompetencia_AreaCurricular">
+            <End Role="AreaCurricular" EntitySet="AreaCurricular" />
+            <End Role="CurriculaBaseCompetencia" EntitySet="CurriculaBaseCompetencia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CurriculaBaseCompetencia_Competencia" Association="Self.FK_CurriculaBaseCompetencia_Competencia">
+            <End Role="Competencia" EntitySet="Competencia" />
+            <End Role="CurriculaBaseCompetencia" EntitySet="CurriculaBaseCompetencia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CurriculaBaseCompetencia_CurriculaBase" Association="Self.FK_CurriculaBaseCompetencia_CurriculaBase">
+            <End Role="CurriculaBase" EntitySet="CurriculaBase" />
+            <End Role="CurriculaBaseCompetencia" EntitySet="CurriculaBaseCompetencia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Curso_AreaCurricular" Association="Self.FK_Curso_AreaCurricular">
+            <End Role="AreaCurricular" EntitySet="AreaCurricular" />
+            <End Role="Curso" EntitySet="Curso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Curso_Grado" Association="Self.FK_Curso_Grado">
+            <End Role="Grado" EntitySet="Grado" />
+            <End Role="Curso" EntitySet="Curso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleCurricula_Competencia" Association="Self.FK_DetalleCurricula_Competencia">
+            <End Role="Competencia" EntitySet="Competencia" />
+            <End Role="DetalleCurricula" EntitySet="DetalleCurricula" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleCurricula_Curricula" Association="Self.FK_DetalleCurricula_Curricula">
+            <End Role="Curricula" EntitySet="Curricula" />
+            <End Role="DetalleCurricula" EntitySet="DetalleCurricula" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DocenteCurso_Curso" Association="Self.FK_DocenteCurso_Curso">
+            <End Role="Curso" EntitySet="Curso" />
+            <End Role="DocenteCurso" EntitySet="DocenteCurso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DocenteCurso_Docente" Association="Self.FK_DocenteCurso_Docente">
+            <End Role="Docente" EntitySet="Docente" />
+            <End Role="DocenteCurso" EntitySet="DocenteCurso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Grado_Nivel" Association="Self.FK_Grado_Nivel">
+            <End Role="Nivel" EntitySet="Nivel" />
+            <End Role="Grado" EntitySet="Grado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlanEstudiosBase_CurriculaBaseCompetencia" Association="Self.FK_PlanEstudiosBase_CurriculaBaseCompetencia">
+            <End Role="CurriculaBaseCompetencia" EntitySet="CurriculaBaseCompetencia" />
+            <End Role="PlanEstudiosBase" EntitySet="PlanEstudiosBase" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlanEstudiosBase_Curso" Association="Self.FK_PlanEstudiosBase_Curso">
+            <End Role="Curso" EntitySet="Curso" />
+            <End Role="PlanEstudiosBase" EntitySet="PlanEstudiosBase" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="InnovaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="InnovaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AreaCurricular" EntityType="InnovaModel.AreaCurricular" />
+          <EntitySet Name="Capacidad" EntityType="InnovaModel.Capacidad" />
+          <EntitySet Name="Competencia" EntityType="InnovaModel.Competencia" />
+          <EntitySet Name="Curricula" EntityType="InnovaModel.Curricula" />
+          <EntitySet Name="CurriculaBase" EntityType="InnovaModel.CurriculaBase" />
+          <EntitySet Name="CurriculaBaseCompetencia" EntityType="InnovaModel.CurriculaBaseCompetencia" />
+          <EntitySet Name="Curso" EntityType="InnovaModel.Curso" />
+          <EntitySet Name="DetalleCurricula" EntityType="InnovaModel.DetalleCurricula" />
+          <EntitySet Name="Docente" EntityType="InnovaModel.Docente" />
+          <EntitySet Name="Grado" EntityType="InnovaModel.Grado" />
+          <EntitySet Name="Nivel" EntityType="InnovaModel.Nivel" />
+          <EntitySet Name="PlanEstudiosBase" EntityType="InnovaModel.PlanEstudiosBase" />
+          <EntitySet Name="sysdiagrams" EntityType="InnovaModel.sysdiagrams" />
+          <AssociationSet Name="FK_CurriculaBaseCompetencia_AreaCurricular" Association="InnovaModel.FK_CurriculaBaseCompetencia_AreaCurricular">
+            <End Role="AreaCurricular" EntitySet="AreaCurricular" />
+            <End Role="CurriculaBaseCompetencia" EntitySet="CurriculaBaseCompetencia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Curso_AreaCurricular" Association="InnovaModel.FK_Curso_AreaCurricular">
+            <End Role="AreaCurricular" EntitySet="AreaCurricular" />
+            <End Role="Curso" EntitySet="Curso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Capacidad_Competencia" Association="InnovaModel.FK_Capacidad_Competencia">
+            <End Role="Competencia" EntitySet="Competencia" />
+            <End Role="Capacidad" EntitySet="Capacidad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CurriculaBaseCompetencia_Competencia" Association="InnovaModel.FK_CurriculaBaseCompetencia_Competencia">
+            <End Role="Competencia" EntitySet="Competencia" />
+            <End Role="CurriculaBaseCompetencia" EntitySet="CurriculaBaseCompetencia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleCurricula_Competencia" Association="InnovaModel.FK_DetalleCurricula_Competencia">
+            <End Role="Competencia" EntitySet="Competencia" />
+            <End Role="DetalleCurricula" EntitySet="DetalleCurricula" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Curricula_CurriculaBase" Association="InnovaModel.FK_Curricula_CurriculaBase">
+            <End Role="CurriculaBase" EntitySet="CurriculaBase" />
+            <End Role="Curricula" EntitySet="Curricula" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Curricula_Nivel" Association="InnovaModel.FK_Curricula_Nivel">
+            <End Role="Nivel" EntitySet="Nivel" />
+            <End Role="Curricula" EntitySet="Curricula" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleCurricula_Curricula" Association="InnovaModel.FK_DetalleCurricula_Curricula">
+            <End Role="Curricula" EntitySet="Curricula" />
+            <End Role="DetalleCurricula" EntitySet="DetalleCurricula" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CurriculaBaseCompetencia_CurriculaBase" Association="InnovaModel.FK_CurriculaBaseCompetencia_CurriculaBase">
+            <End Role="CurriculaBase" EntitySet="CurriculaBase" />
+            <End Role="CurriculaBaseCompetencia" EntitySet="CurriculaBaseCompetencia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlanEstudiosBase_CurriculaBaseCompetencia" Association="InnovaModel.FK_PlanEstudiosBase_CurriculaBaseCompetencia">
+            <End Role="CurriculaBaseCompetencia" EntitySet="CurriculaBaseCompetencia" />
+            <End Role="PlanEstudiosBase" EntitySet="PlanEstudiosBase" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Curso_Grado" Association="InnovaModel.FK_Curso_Grado">
+            <End Role="Grado" EntitySet="Grado" />
+            <End Role="Curso" EntitySet="Curso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlanEstudiosBase_Curso" Association="InnovaModel.FK_PlanEstudiosBase_Curso">
+            <End Role="Curso" EntitySet="Curso" />
+            <End Role="PlanEstudiosBase" EntitySet="PlanEstudiosBase" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Grado_Nivel" Association="InnovaModel.FK_Grado_Nivel">
+            <End Role="Nivel" EntitySet="Nivel" />
+            <End Role="Grado" EntitySet="Grado" />
+          </AssociationSet>
+          <AssociationSet Name="DocenteCurso" Association="InnovaModel.DocenteCurso">
+            <End Role="Curso" EntitySet="Curso" />
+            <End Role="Docente" EntitySet="Docente" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="AreaCurricular">
+          <Key>
+            <PropertyRef Name="IdAreaCurricular" />
+          </Key>
+          <Property Name="IdAreaCurricular" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CurriculaBaseCompetencia" Relationship="InnovaModel.FK_CurriculaBaseCompetencia_AreaCurricular" FromRole="AreaCurricular" ToRole="CurriculaBaseCompetencia" />
+          <NavigationProperty Name="Curso" Relationship="InnovaModel.FK_Curso_AreaCurricular" FromRole="AreaCurricular" ToRole="Curso" />
+        </EntityType>
+        <EntityType Name="Capacidad">
+          <Key>
+            <PropertyRef Name="IdCapacidad" />
+          </Key>
+          <Property Name="IdCapacidad" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IdCompetencia" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Competencia" Relationship="InnovaModel.FK_Capacidad_Competencia" FromRole="Capacidad" ToRole="Competencia" />
+        </EntityType>
+        <EntityType Name="Competencia">
+          <Key>
+            <PropertyRef Name="IdCompetencia" />
+          </Key>
+          <Property Name="IdCompetencia" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Capacidad" Relationship="InnovaModel.FK_Capacidad_Competencia" FromRole="Competencia" ToRole="Capacidad" />
+          <NavigationProperty Name="CurriculaBaseCompetencia" Relationship="InnovaModel.FK_CurriculaBaseCompetencia_Competencia" FromRole="Competencia" ToRole="CurriculaBaseCompetencia" />
+          <NavigationProperty Name="DetalleCurricula" Relationship="InnovaModel.FK_DetalleCurricula_Competencia" FromRole="Competencia" ToRole="DetalleCurricula" />
+        </EntityType>
+        <EntityType Name="Curricula">
+          <Key>
+            <PropertyRef Name="IdCurricula" />
+          </Key>
+          <Property Name="IdCurricula" Type="Int32" Nullable="false" />
+          <Property Name="IdNivel" Type="Int32" />
+          <Property Name="IdCurriculaBase" Type="Int32" />
+          <Property Name="Estado" Type="Int32" />
+          <NavigationProperty Name="CurriculaBase" Relationship="InnovaModel.FK_Curricula_CurriculaBase" FromRole="Curricula" ToRole="CurriculaBase" />
+          <NavigationProperty Name="Nivel" Relationship="InnovaModel.FK_Curricula_Nivel" FromRole="Curricula" ToRole="Nivel" />
+          <NavigationProperty Name="DetalleCurricula" Relationship="InnovaModel.FK_DetalleCurricula_Curricula" FromRole="Curricula" ToRole="DetalleCurricula" />
+        </EntityType>
+        <EntityType Name="CurriculaBase">
+          <Key>
+            <PropertyRef Name="IdCurriculaBase" />
+          </Key>
+          <Property Name="IdCurriculaBase" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Año" Type="Int32" Nullable="false" />
+          <Property Name="NumeroResolucion" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Vigencia" Type="Boolean" />
+          <NavigationProperty Name="Curricula" Relationship="InnovaModel.FK_Curricula_CurriculaBase" FromRole="CurriculaBase" ToRole="Curricula" />
+          <NavigationProperty Name="CurriculaBaseCompetencia" Relationship="InnovaModel.FK_CurriculaBaseCompetencia_CurriculaBase" FromRole="CurriculaBase" ToRole="CurriculaBaseCompetencia" />
+        </EntityType>
+        <EntityType Name="CurriculaBaseCompetencia">
+          <Key>
+            <PropertyRef Name="IdCurriculaBaseCompetencia" />
+          </Key>
+          <Property Name="IdCurriculaBaseCompetencia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdCurriculaBase" Type="Int32" Nullable="false" />
+          <Property Name="IdCompetencia" Type="Int32" Nullable="false" />
+          <Property Name="IdAreaCurricular" Type="Int32" />
+          <NavigationProperty Name="AreaCurricular" Relationship="InnovaModel.FK_CurriculaBaseCompetencia_AreaCurricular" FromRole="CurriculaBaseCompetencia" ToRole="AreaCurricular" />
+          <NavigationProperty Name="Competencia" Relationship="InnovaModel.FK_CurriculaBaseCompetencia_Competencia" FromRole="CurriculaBaseCompetencia" ToRole="Competencia" />
+          <NavigationProperty Name="CurriculaBase" Relationship="InnovaModel.FK_CurriculaBaseCompetencia_CurriculaBase" FromRole="CurriculaBaseCompetencia" ToRole="CurriculaBase" />
+          <NavigationProperty Name="PlanEstudiosBase" Relationship="InnovaModel.FK_PlanEstudiosBase_CurriculaBaseCompetencia" FromRole="CurriculaBaseCompetencia" ToRole="PlanEstudiosBase" />
+        </EntityType>
+        <EntityType Name="Curso">
+          <Key>
+            <PropertyRef Name="IdCurso" />
+          </Key>
+          <Property Name="IdCurso" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Descripción" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IdGrado" Type="Int32" Nullable="false" />
+          <Property Name="IdAreaCurricular" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AreaCurricular" Relationship="InnovaModel.FK_Curso_AreaCurricular" FromRole="Curso" ToRole="AreaCurricular" />
+          <NavigationProperty Name="Grado" Relationship="InnovaModel.FK_Curso_Grado" FromRole="Curso" ToRole="Grado" />
+          <NavigationProperty Name="PlanEstudiosBase" Relationship="InnovaModel.FK_PlanEstudiosBase_Curso" FromRole="Curso" ToRole="PlanEstudiosBase" />
+          <NavigationProperty Name="Docente" Relationship="InnovaModel.DocenteCurso" FromRole="Curso" ToRole="Docente" />
+        </EntityType>
+        <EntityType Name="DetalleCurricula">
+          <Key>
+            <PropertyRef Name="IdDetalleCurricula" />
+          </Key>
+          <Property Name="IdCurricula" Type="Int32" Nullable="false" />
+          <Property Name="IdDetalleCurricula" Type="Int32" Nullable="false" />
+          <Property Name="IdCompetencia" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Competencia" Relationship="InnovaModel.FK_DetalleCurricula_Competencia" FromRole="DetalleCurricula" ToRole="Competencia" />
+          <NavigationProperty Name="Curricula" Relationship="InnovaModel.FK_DetalleCurricula_Curricula" FromRole="DetalleCurricula" ToRole="Curricula" />
+        </EntityType>
+        <EntityType Name="Docente">
+          <Key>
+            <PropertyRef Name="IdDocente" />
+          </Key>
+          <Property Name="IdDocente" Type="Int32" Nullable="false" />
+          <Property Name="Nombres" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Apellidos" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Curso" Relationship="InnovaModel.DocenteCurso" FromRole="Docente" ToRole="Curso" />
+        </EntityType>
+        <EntityType Name="Grado">
+          <Key>
+            <PropertyRef Name="IdGrado" />
+          </Key>
+          <Property Name="IdGrado" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IdNivel" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Curso" Relationship="InnovaModel.FK_Curso_Grado" FromRole="Grado" ToRole="Curso" />
+          <NavigationProperty Name="Nivel" Relationship="InnovaModel.FK_Grado_Nivel" FromRole="Grado" ToRole="Nivel" />
+        </EntityType>
+        <EntityType Name="Nivel">
+          <Key>
+            <PropertyRef Name="IdNivel" />
+          </Key>
+          <Property Name="IdNivel" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Curricula" Relationship="InnovaModel.FK_Curricula_Nivel" FromRole="Nivel" ToRole="Curricula" />
+          <NavigationProperty Name="Grado" Relationship="InnovaModel.FK_Grado_Nivel" FromRole="Nivel" ToRole="Grado" />
+        </EntityType>
+        <EntityType Name="PlanEstudiosBase">
+          <Key>
+            <PropertyRef Name="IdCurriculaBaseCompetencia" />
+            <PropertyRef Name="IdCurso" />
+          </Key>
+          <Property Name="IdCurriculaBaseCompetencia" Type="Int32" Nullable="false" />
+          <Property Name="IdCurso" Type="Int32" Nullable="false" />
+          <Property Name="Horas" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <NavigationProperty Name="CurriculaBaseCompetencia" Relationship="InnovaModel.FK_PlanEstudiosBase_CurriculaBaseCompetencia" FromRole="PlanEstudiosBase" ToRole="CurriculaBaseCompetencia" />
+          <NavigationProperty Name="Curso" Relationship="InnovaModel.FK_PlanEstudiosBase_Curso" FromRole="PlanEstudiosBase" ToRole="Curso" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_CurriculaBaseCompetencia_AreaCurricular">
+          <End Type="InnovaModel.AreaCurricular" Role="AreaCurricular" Multiplicity="0..1" />
+          <End Type="InnovaModel.CurriculaBaseCompetencia" Role="CurriculaBaseCompetencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AreaCurricular">
+              <PropertyRef Name="IdAreaCurricular" />
+            </Principal>
+            <Dependent Role="CurriculaBaseCompetencia">
+              <PropertyRef Name="IdAreaCurricular" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Curso_AreaCurricular">
+          <End Type="InnovaModel.AreaCurricular" Role="AreaCurricular" Multiplicity="1" />
+          <End Type="InnovaModel.Curso" Role="Curso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AreaCurricular">
+              <PropertyRef Name="IdAreaCurricular" />
+            </Principal>
+            <Dependent Role="Curso">
+              <PropertyRef Name="IdAreaCurricular" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Capacidad_Competencia">
+          <End Type="InnovaModel.Competencia" Role="Competencia" Multiplicity="1" />
+          <End Type="InnovaModel.Capacidad" Role="Capacidad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Competencia">
+              <PropertyRef Name="IdCompetencia" />
+            </Principal>
+            <Dependent Role="Capacidad">
+              <PropertyRef Name="IdCompetencia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CurriculaBaseCompetencia_Competencia">
+          <End Type="InnovaModel.Competencia" Role="Competencia" Multiplicity="1" />
+          <End Type="InnovaModel.CurriculaBaseCompetencia" Role="CurriculaBaseCompetencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Competencia">
+              <PropertyRef Name="IdCompetencia" />
+            </Principal>
+            <Dependent Role="CurriculaBaseCompetencia">
+              <PropertyRef Name="IdCompetencia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleCurricula_Competencia">
+          <End Type="InnovaModel.Competencia" Role="Competencia" Multiplicity="1" />
+          <End Type="InnovaModel.DetalleCurricula" Role="DetalleCurricula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Competencia">
+              <PropertyRef Name="IdCompetencia" />
+            </Principal>
+            <Dependent Role="DetalleCurricula">
+              <PropertyRef Name="IdCompetencia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Curricula_CurriculaBase">
+          <End Type="InnovaModel.CurriculaBase" Role="CurriculaBase" Multiplicity="0..1" />
+          <End Type="InnovaModel.Curricula" Role="Curricula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CurriculaBase">
+              <PropertyRef Name="IdCurriculaBase" />
+            </Principal>
+            <Dependent Role="Curricula">
+              <PropertyRef Name="IdCurriculaBase" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Curricula_Nivel">
+          <End Type="InnovaModel.Nivel" Role="Nivel" Multiplicity="0..1" />
+          <End Type="InnovaModel.Curricula" Role="Curricula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nivel">
+              <PropertyRef Name="IdNivel" />
+            </Principal>
+            <Dependent Role="Curricula">
+              <PropertyRef Name="IdNivel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleCurricula_Curricula">
+          <End Type="InnovaModel.Curricula" Role="Curricula" Multiplicity="1" />
+          <End Type="InnovaModel.DetalleCurricula" Role="DetalleCurricula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Curricula">
+              <PropertyRef Name="IdCurricula" />
+            </Principal>
+            <Dependent Role="DetalleCurricula">
+              <PropertyRef Name="IdCurricula" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CurriculaBaseCompetencia_CurriculaBase">
+          <End Type="InnovaModel.CurriculaBase" Role="CurriculaBase" Multiplicity="1" />
+          <End Type="InnovaModel.CurriculaBaseCompetencia" Role="CurriculaBaseCompetencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CurriculaBase">
+              <PropertyRef Name="IdCurriculaBase" />
+            </Principal>
+            <Dependent Role="CurriculaBaseCompetencia">
+              <PropertyRef Name="IdCurriculaBase" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlanEstudiosBase_CurriculaBaseCompetencia">
+          <End Type="InnovaModel.CurriculaBaseCompetencia" Role="CurriculaBaseCompetencia" Multiplicity="1" />
+          <End Type="InnovaModel.PlanEstudiosBase" Role="PlanEstudiosBase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CurriculaBaseCompetencia">
+              <PropertyRef Name="IdCurriculaBaseCompetencia" />
+            </Principal>
+            <Dependent Role="PlanEstudiosBase">
+              <PropertyRef Name="IdCurriculaBaseCompetencia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Curso_Grado">
+          <End Type="InnovaModel.Grado" Role="Grado" Multiplicity="1" />
+          <End Type="InnovaModel.Curso" Role="Curso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grado">
+              <PropertyRef Name="IdGrado" />
+            </Principal>
+            <Dependent Role="Curso">
+              <PropertyRef Name="IdGrado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlanEstudiosBase_Curso">
+          <End Type="InnovaModel.Curso" Role="Curso" Multiplicity="1" />
+          <End Type="InnovaModel.PlanEstudiosBase" Role="PlanEstudiosBase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Curso">
+              <PropertyRef Name="IdCurso" />
+            </Principal>
+            <Dependent Role="PlanEstudiosBase">
+              <PropertyRef Name="IdCurso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Grado_Nivel">
+          <End Type="InnovaModel.Nivel" Role="Nivel" Multiplicity="1" />
+          <End Type="InnovaModel.Grado" Role="Grado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nivel">
+              <PropertyRef Name="IdNivel" />
+            </Principal>
+            <Dependent Role="Grado">
+              <PropertyRef Name="IdNivel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DocenteCurso">
+          <End Type="InnovaModel.Curso" Role="Curso" Multiplicity="*" />
+          <End Type="InnovaModel.Docente" Role="Docente" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="InnovaModelStoreContainer" CdmEntityContainer="InnovaEntities">
+          <EntitySetMapping Name="AreaCurricular">
+            <EntityTypeMapping TypeName="InnovaModel.AreaCurricular">
+              <MappingFragment StoreEntitySet="AreaCurricular">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdAreaCurricular" ColumnName="IdAreaCurricular" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Capacidad">
+            <EntityTypeMapping TypeName="InnovaModel.Capacidad">
+              <MappingFragment StoreEntitySet="Capacidad">
+                <ScalarProperty Name="IdCompetencia" ColumnName="IdCompetencia" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdCapacidad" ColumnName="IdCapacidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Competencia">
+            <EntityTypeMapping TypeName="InnovaModel.Competencia">
+              <MappingFragment StoreEntitySet="Competencia">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdCompetencia" ColumnName="IdCompetencia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Curricula">
+            <EntityTypeMapping TypeName="InnovaModel.Curricula">
+              <MappingFragment StoreEntitySet="Curricula">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="IdCurriculaBase" ColumnName="IdCurriculaBase" />
+                <ScalarProperty Name="IdNivel" ColumnName="IdNivel" />
+                <ScalarProperty Name="IdCurricula" ColumnName="IdCurricula" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CurriculaBase">
+            <EntityTypeMapping TypeName="InnovaModel.CurriculaBase">
+              <MappingFragment StoreEntitySet="CurriculaBase">
+                <ScalarProperty Name="Vigencia" ColumnName="Vigencia" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="NumeroResolucion" ColumnName="NumeroResolucion" />
+                <ScalarProperty Name="Año" ColumnName="Año" />
+                <ScalarProperty Name="IdCurriculaBase" ColumnName="IdCurriculaBase" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CurriculaBaseCompetencia">
+            <EntityTypeMapping TypeName="InnovaModel.CurriculaBaseCompetencia">
+              <MappingFragment StoreEntitySet="CurriculaBaseCompetencia">
+                <ScalarProperty Name="IdAreaCurricular" ColumnName="IdAreaCurricular" />
+                <ScalarProperty Name="IdCompetencia" ColumnName="IdCompetencia" />
+                <ScalarProperty Name="IdCurriculaBase" ColumnName="IdCurriculaBase" />
+                <ScalarProperty Name="IdCurriculaBaseCompetencia" ColumnName="IdCurriculaBaseCompetencia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Curso">
+            <EntityTypeMapping TypeName="InnovaModel.Curso">
+              <MappingFragment StoreEntitySet="Curso">
+                <ScalarProperty Name="IdAreaCurricular" ColumnName="IdAreaCurricular" />
+                <ScalarProperty Name="IdGrado" ColumnName="IdGrado" />
+                <ScalarProperty Name="Descripción" ColumnName="Descripción" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdCurso" ColumnName="IdCurso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DetalleCurricula">
+            <EntityTypeMapping TypeName="InnovaModel.DetalleCurricula">
+              <MappingFragment StoreEntitySet="DetalleCurricula">
+                <ScalarProperty Name="IdCompetencia" ColumnName="IdCompetencia" />
+                <ScalarProperty Name="IdDetalleCurricula" ColumnName="IdDetalleCurricula" />
+                <ScalarProperty Name="IdCurricula" ColumnName="IdCurricula" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Docente">
+            <EntityTypeMapping TypeName="InnovaModel.Docente">
+              <MappingFragment StoreEntitySet="Docente">
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="IdDocente" ColumnName="IdDocente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Grado">
+            <EntityTypeMapping TypeName="InnovaModel.Grado">
+              <MappingFragment StoreEntitySet="Grado">
+                <ScalarProperty Name="IdNivel" ColumnName="IdNivel" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdGrado" ColumnName="IdGrado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Nivel">
+            <EntityTypeMapping TypeName="InnovaModel.Nivel">
+              <MappingFragment StoreEntitySet="Nivel">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdNivel" ColumnName="IdNivel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlanEstudiosBase">
+            <EntityTypeMapping TypeName="InnovaModel.PlanEstudiosBase">
+              <MappingFragment StoreEntitySet="PlanEstudiosBase">
+                <ScalarProperty Name="Horas" ColumnName="Horas" />
+                <ScalarProperty Name="IdCurso" ColumnName="IdCurso" />
+                <ScalarProperty Name="IdCurriculaBaseCompetencia" ColumnName="IdCurriculaBaseCompetencia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="InnovaModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="DocenteCurso" TypeName="InnovaModel.DocenteCurso" StoreEntitySet="DocenteCurso">
+            <EndProperty Name="Docente">
+              <ScalarProperty Name="IdDocente" ColumnName="IdDocente" />
+            </EndProperty>
+            <EndProperty Name="Curso">
+              <ScalarProperty Name="IdCurso" ColumnName="IdCurso" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

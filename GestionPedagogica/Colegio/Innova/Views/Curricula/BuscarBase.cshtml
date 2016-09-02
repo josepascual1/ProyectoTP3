@@ -1,0 +1,72 @@
+﻿@{
+    <div class="form-inline">
+
+        <div class="form-group">
+
+            @using (Html.BeginForm("ListaBase", "Curricula", FormMethod.Post, new { id = "formBusquedaBase", @class = "form-inline" }))
+            {
+
+                <h4 class="form-signin-heading text-primary">Consulta de Currículas Base</h4>
+                <div class="form-group">
+                    @Html.Label("lblDesde", "Desde")<br />
+                    @Html.TextBox("txtDesde", null, new { @class = "form-control solo-numero", maxlength = "4" })
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("lblHasta", "Hasta")<br />
+                    @Html.TextBox("txtHasta", null, new { @class = "form-control solo-numero", maxlength = "4" })
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("lblResolucion", "Resolución Ministerial")<br />
+                    @Html.TextBox("txtResolucion", null, new { @class = "form-control", maxlength = "20" })
+                </div>
+
+                <div class="form-group">
+                    <br />
+                    <button class="btn btn-primary" type="submit" id="btnBusquedaBase">
+                        Buscar
+                    </button>
+                </div>
+
+            }
+        </div>
+
+        <div class="form-group">
+            <div class="form-group">
+                <br /><br /><br />
+                <button class="btn btn-primary" type="submit" id="btnLimpiarBusquedaBase" >
+                    Limpiar
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+}
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        
+        $(".solo-numero").keyup(function () {
+            this.value = (this.value + '').replace(/[^0-9]/g, '');
+        });
+    });
+
+    $("#formBusquedaBase").ajaxForm(function (data) {
+        $("#resultadoBusquedaBase").html(data);
+        $("#resultadoBusquedaBase").slideDown("slow");
+    });
+
+    $("#btnLimpiarBusquedaBase").click(function (data) {
+        $("#txtDesde").val("");
+        $("#txtHasta").val("");
+        $("#txtResolucion").val("");
+    });
+
+</script>

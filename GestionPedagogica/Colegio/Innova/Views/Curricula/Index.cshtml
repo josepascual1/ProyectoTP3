@@ -1,0 +1,40 @@
+﻿<div class="container">
+    <div class="row" style="background-color:gray">
+        <div>
+            <h3>Inicio</h3>
+            <!-- tabs left -->
+            <div class="tabbable">
+                <ul class="nav nav-pills nav-stacked col-xs-2">
+                    <li class="active"><a href="#a" data-toggle="tab">Gestión Pedagógica</a></li>
+                    <li ><a href="#b" data-toggle="tab">Gestión de apoyo académico</a></li>
+                    <li><a href="#c" data-toggle="tab">Gestión Directiva</a></li>
+                    <li><a href="#d" data-toggle="tab">Selección de Personal</a></li>
+                    <li><a href="#e" data-toggle="tab">Gestión académica y formativa</a></li>
+                    <li><a href="#f" data-toggle="tab">Gestión de gobierno escolar</a></li>
+
+
+                </ul>
+                <div class="tab-content col-xs-10" style="background-color:white">
+                    <div class="tab-pane active" id="a">
+
+                        @{Html.RenderAction("Base", "Curricula");
+                        }
+                    </div>
+                    <div class="tab-pane" id="b">Secondo sed ac orci quis tortor imperdiet venenatis. Duis elementum auctor accumsan. Aliquam in felis sit amet augue.</div>
+                    <div class="tab-pane" id="c">
+                        Thirdamuno, ipsum dolor sit amet, consectetur adipiscing elit. Duis elementum auctor accumsan. Duis pharetra
+                        varius quam sit amet vulputate. Quisque mauris augue, molestie tincidunt condimentum vitae.
+                    </div>
+                    <div id="d"></div>
+                    <div id="e"></div>
+                    <div id="f"></div>
+
+                </div>
+            </div>
+            <!-- /tabs -->
+        </div>
+
+    </div>
+    <!-- /row -->
+</div>
+<hr>

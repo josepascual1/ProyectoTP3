@@ -1,0 +1,100 @@
+﻿
+
+<script src="@Url.Content("~/Scripts/jquery.form.js")"></script>
+
+@{
+    var idCurriculaBase = ViewBag.IdCurriculaBase is int ? (int)ViewBag.IdCurriculaBase : 0;
+    var Base = ViewBag.Base as Innova.Models.CurriculaBase;
+}
+@{ using (Html.BeginForm("RegistrarBase", "Curricula", FormMethod.Post, new { enctype = "multipart/form-data", id = "formRegistrarBase", @class = "form-group", required = "required", }))
+ {
+
+     if (Base != null)
+     {
+        @Html.Hidden("hidIdCurriculaBase", idCurriculaBase)
+        <div class="form-group">
+            @Html.Label("lblAnno", "Año")
+            @Html.TextBox("txtAnno", Base.Año, new { @class = "form-control solo-numero", required = "required",maxlength = "4" })
+        </div>
+
+        <div class="form-group">
+            @Html.Label("lblResolucion", "Resolución Ministerial")
+            @Html.TextBox("txtResolucion", Base.NumeroResolucion, new { @class = "form-control", required = "required",maxlength = "20" })
+        </div>
+
+        <div class="form-group">
+            @Html.Label("lblDescripcion", "Descripción")
+            @Html.TextArea("txtDescripcion", Base.Descripcion, new { @class = "form-control", maxlength = "1000" })
+        </div>
+
+        <div class="form-group">
+            @Html.Label("lblVigencia", "Vigencia")
+            @Html.CheckBox("chkVigencia", Base.Vigencia.Value)
+        </div>
+     }
+     else
+     {
+        @Html.Hidden("hidIdCurriculaBase", idCurriculaBase)
+        <div class="form-group">
+            @Html.Label("lblAnno", "Año")
+            @Html.TextBox("txtAnno", null, new { @class = "form-control solo-numero", required = "required",maxlength = "4" })
+        </div>
+
+        <div class="form-group">
+            @Html.Label("lblResolucion", "Resolución Ministerial")
+            @Html.TextBox("txtResolucion", null, new { @class = "form-control",required = "required", maxlength = "20" })
+        </div>
+
+        <div class="form-group">
+            @Html.Label("lblDescripcion", "Descripción")
+            @Html.TextArea("txtDescripcion", null, new { @class = "form-control", maxlength = "1000" })
+        </div>
+
+        <div class="form-group">
+            @Html.Label("lblVigencia", "Vigencia")
+            @Html.CheckBox("chkVigencia", true)
+        </div>
+     }
+
+
+
+
+    <button class="btn btn-primary" type="submit" id="btnBusquedaBase">
+        Registrar
+    </button>
+
+ }}
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $(".solo-numero").keyup(function () {
+            this.value = (this.value + '').replace(/[^0-9]/g, '');
+        });
+    });
+
+
+    $("#formRegistrarBase").ajaxForm(function (result) {
+        var obj = jQuery.parseJSON(result);
+       
+
+        if (obj) {
+            alert("Registro satisfactorio");
+            $('#BasePopup').modal('hide');
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+
+            $.post('@Url.Action("ListaBase", "Curricula")', function (data) {
+                if (data != null) {
+                    $("#resultadoBusquedaBase").html(data);
+                    //$("#aTesis2").hide();
+                    $("#resultadoBusquedaBase").slideDown("slow");
+                }
+            });
+        } else {
+            alert("Lo sentimos hubo un inconveniente en el registro de la curricula base");
+        }
+    });
+
+</script>

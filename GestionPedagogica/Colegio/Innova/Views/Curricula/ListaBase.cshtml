@@ -1,0 +1,182 @@
+﻿@{
+
+    var lista = ViewBag.Lista as List<Innova.Models.CurriculaBase>;
+}
+
+<button class="btn btn-primary" type="submit" id="btnNuevaBase" style="align-content:flex-end">
+    Nuevo
+</button>
+
+
+
+<table id="myTableAsesor" class="table table-bordered">
+
+    <thead>
+        <tr>
+            <th>Codigo</th>
+            <th>Año</th>
+            <th>Resolución Ministerial</th>
+            <th>Estado</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+
+        @{
+            System.Diagnostics.Debug.Assert(lista != null, "lista != null");
+        }
+        @foreach (var item in lista)
+        {
+            <tr class="filaBase" pidbase="@(item.IdCurriculaBase)">
+                <td>
+                    <div>
+                        @item.IdCurriculaBase
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        @item.Año
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        @item.NumeroResolucion
+                    </div>
+                </td>
+                <td>
+                    <div >
+                        @if (Convert.ToBoolean(item.Vigencia))
+                        {
+                        @Html.Label("lblEstado", "Vigente")
+                        }
+                        else
+                        {
+                        @Html.Label("lblEstado", "No Vigente")
+                        }
+                    </div>
+                </td>
+                <td>
+                    <div class="EditarBase" data-toggle="tooltip" data-placement="top" title="Editar">
+                        <img src="~/Content/Images/editar.png" alt="Detalles de Curricula Base" />
+                    </div>
+                </td>
+                <td>
+                    <div class="AddCompetenciaCapacidadArea" data-toggle="tooltip" data-placement="top" title="Agregar competencias y capacidades">
+                        <img src="~/Content/Images/detalles.png" alt="Competencia Capacidad Area" />
+                    </div>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+
+</table>
+
+<!-- Modal Curricula Base-->
+<div class="modal fade" id="BasePopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <div class="col-md-12">
+                    <div class="col-md-12 label label-default">
+                        <div class="col-md-6" style="text-align: left">
+                            <h5>Registrar Curricula Base</h5>
+                        </div>
+                        <div class="col-md-6" style="text-align: right">
+                            <button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-default">CERRAR</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-body" id="modal-body">
+                ...
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Competencia Capacidad Area-->
+<div class="modal fade modal-lg" id="CompetenciaCapacidadAreaPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+
+                <div class="col-md-12">
+                    <div class="col-md-12 label label-default">
+                        <div class="col-md-6" style="text-align: left">
+                            <h5>Asignar Competencias y capacidades por área curricular</h5>
+                        </div>
+                        <div class="col-md-6" style="text-align: right">
+                            <button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-default">CERRAR</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-body modal-lg" id="modal-body">
+                ...
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $("#btnNuevaBase").on("click", function () {
+        $.post('@Url.Action("FormBase", "Curricula")', function (data) {
+            if (data != null) {
+                $('#BasePopup').find('.modal-body').html(data);
+                $('#BasePopup').modal('show');
+            }
+        });
+    });
+
+    $(".EditarBase").on("click", function () {
+        var id = $(this).parents(".filaBase").attr("pidbase");
+        $.post('@Url.Action("FormBase", "Curricula")', { idCurriculaBase: id }, function (data) {
+            if (data != null) {
+                $('#BasePopup').find('.modal-body').html(data);
+                $('#BasePopup').modal('show');
+            }
+        });
+    });
+
+    $(".AddCompetenciaCapacidadArea").on("click", function () {
+        var id = $(this).parents(".filaBase").attr("pidbase");
+        $.post('@Url.Action("FormCompetenciaCapacidadArea", "Curricula")', { idCurriculaBase: id }, function (data) {
+            if (data != null) {
+                $('#CompetenciaCapacidadAreaPopup').find('.modal-body').html(data);
+                $('#CompetenciaCapacidadAreaPopup').modal('show');
+            }
+        });
+    });
+
+
+
+    @*$(".EliminarEvento").on("click", function () {
+        var objeto = $(this);
+        var id = $(this).parents(".filaEvento").attr("pidEvento");
+
+        if (confirm("¿Seguro de eliminar el registro?")) {
+
+            $.post('@Url.Action("EliminarEvento", "Inicio")', { idEvento: id }, function (data) {
+                var obj = jQuery.parseJSON(data);
+                if (obj) {
+                    objeto.parents(".filaEvento").hide("slow");
+                } else {
+                    alert("Hubo un incoveniente al eliminar el registro");
+                }
+            });
+        }
+        return false;
+    });*@
+
+
+</script>
+

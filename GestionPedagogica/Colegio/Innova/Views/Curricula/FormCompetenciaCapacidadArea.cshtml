@@ -1,0 +1,61 @@
+﻿<script src="@Url.Content("~/Scripts/jquery.form.js")"></script>
+
+@{
+
+    var idCurriculaBase = ViewBag.IdCurriculaBase is int ? (int)ViewBag.IdCurriculaBase : 0;
+    var listaArea = ViewBag.listaArea as SelectList;
+    var listaCompetencia = ViewBag.listaCompetencia as SelectList;
+
+}
+
+@{ using (Html.BeginForm("RegistrarCompetenciaxArea", "Curricula", FormMethod.Post, new { enctype = "multipart/form-data", id = "formRegistrarCompetenciaArea", @class = "form-inline", required = "required", }))
+ {
+
+    @Html.Hidden("hidIdCurriculaBase", idCurriculaBase)
+
+    <div class="form-group">
+        @Html.Label("lbArea", "Área")<br />
+        @Html.DropDownList("cboArea", listaArea, "[Seleccionar]", new { required = "required" })
+    </div>
+
+    <div class="form-group">
+        @Html.Label("lblCompetencia", "Competencia")<br />
+        @Html.DropDownList("cboCompetencia", listaCompetencia, "[Seleccionar]", new { required = "required" })
+    </div>
+
+    <div class="form-group">
+        <br />
+        <button class="btn btn-primary" type="submit" id="btnRegistrarCompetenciaArea">
+            Agregar
+        </button>
+    </div>
+
+ }}
+
+
+<div id="divListaCompetenciaCapacidadArea">
+
+    @{Html.RenderAction("ListaAreaCompetencia", "Curricula", new { idCurriculaBase = @idCurriculaBase});}
+    
+</div>
+<script type="text/javascript">
+
+    $("#formRegistrarCompetenciaArea").ajaxForm(function (result) {
+        var obj = jQuery.parseJSON(result);
+        var id = $("#hidIdCurriculaBase").val();
+
+        if (obj) {
+            alert("Registro satisfactorio");
+
+            $.post('@Url.Action("ListaAreaCompetencia", "Curricula")', { idCurriculaBase: id }, function (data) {
+                if (data != null) {
+                    $("#divListaCompetenciaCapacidadArea").html(data);
+                    $("#divListaCompetenciaCapacidadArea").slideDown("slow");
+                }
+            });
+        } else {
+            alert("Lo sentimos hubo un inconveniente en el registro de competencias y capacidades por área curricular");
+        }
+    });
+
+</script>

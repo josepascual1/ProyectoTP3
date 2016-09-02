@@ -1,0 +1,381 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="InnovaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AreaCurricular">
+    <Key>
+      <PropertyRef Name="IdAreaCurricular" />
+    </Key>
+    <Property Name="IdAreaCurricular" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Capacidad">
+    <Key>
+      <PropertyRef Name="IdCapacidad" />
+    </Key>
+    <Property Name="IdCapacidad" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="IdCompetencia" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Competencia">
+    <Key>
+      <PropertyRef Name="IdCompetencia" />
+    </Key>
+    <Property Name="IdCompetencia" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="200" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Curricula">
+    <Key>
+      <PropertyRef Name="IdCurricula" />
+    </Key>
+    <Property Name="IdCurricula" Type="int" Nullable="false" />
+    <Property Name="IdNivel" Type="int" />
+    <Property Name="IdCurriculaBase" Type="int" />
+    <Property Name="Estado" Type="int" />
+  </EntityType>
+  <EntityType Name="CurriculaBase">
+    <Key>
+      <PropertyRef Name="IdCurriculaBase" />
+    </Key>
+    <Property Name="IdCurriculaBase" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Año" Type="int" Nullable="false" />
+    <Property Name="NumeroResolucion" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="1000" />
+    <Property Name="Vigencia" Type="bit" />
+  </EntityType>
+  <EntityType Name="CurriculaBaseCompetencia">
+    <Key>
+      <PropertyRef Name="IdCurriculaBaseCompetencia" />
+    </Key>
+    <Property Name="IdCurriculaBaseCompetencia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdCurriculaBase" Type="int" Nullable="false" />
+    <Property Name="IdCompetencia" Type="int" Nullable="false" />
+    <Property Name="IdAreaCurricular" Type="int" />
+  </EntityType>
+  <EntityType Name="Curso">
+    <Key>
+      <PropertyRef Name="IdCurso" />
+    </Key>
+    <Property Name="IdCurso" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Descripción" Type="varchar" MaxLength="200" />
+    <Property Name="IdGrado" Type="int" Nullable="false" />
+    <Property Name="IdAreaCurricular" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DetalleCurricula">
+    <Key>
+      <PropertyRef Name="IdDetalleCurricula" />
+    </Key>
+    <Property Name="IdCurricula" Type="int" Nullable="false" />
+    <Property Name="IdDetalleCurricula" Type="int" Nullable="false" />
+    <Property Name="IdCompetencia" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Docente">
+    <Key>
+      <PropertyRef Name="IdDocente" />
+    </Key>
+    <Property Name="IdDocente" Type="int" Nullable="false" />
+    <Property Name="Nombres" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Apellidos" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="DocenteCurso">
+    <Key>
+      <PropertyRef Name="IdDocente" />
+      <PropertyRef Name="IdCurso" />
+    </Key>
+    <Property Name="IdDocente" Type="int" Nullable="false" />
+    <Property Name="IdCurso" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Grado">
+    <Key>
+      <PropertyRef Name="IdGrado" />
+    </Key>
+    <Property Name="IdGrado" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="200" />
+    <Property Name="IdNivel" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Nivel">
+    <Key>
+      <PropertyRef Name="IdNivel" />
+    </Key>
+    <Property Name="IdNivel" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="PlanEstudiosBase">
+    <Key>
+      <PropertyRef Name="IdCurriculaBaseCompetencia" />
+      <PropertyRef Name="IdCurso" />
+    </Key>
+    <Property Name="IdCurriculaBaseCompetencia" Type="int" Nullable="false" />
+    <Property Name="IdCurso" Type="int" Nullable="false" />
+    <Property Name="Horas" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK_Capacidad_Competencia">
+    <End Role="Competencia" Type="Self.Competencia" Multiplicity="1" />
+    <End Role="Capacidad" Type="Self.Capacidad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Competencia">
+        <PropertyRef Name="IdCompetencia" />
+      </Principal>
+      <Dependent Role="Capacidad">
+        <PropertyRef Name="IdCompetencia" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Curricula_CurriculaBase">
+    <End Role="CurriculaBase" Type="Self.CurriculaBase" Multiplicity="0..1" />
+    <End Role="Curricula" Type="Self.Curricula" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CurriculaBase">
+        <PropertyRef Name="IdCurriculaBase" />
+      </Principal>
+      <Dependent Role="Curricula">
+        <PropertyRef Name="IdCurriculaBase" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Curricula_Nivel">
+    <End Role="Nivel" Type="Self.Nivel" Multiplicity="0..1" />
+    <End Role="Curricula" Type="Self.Curricula" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Nivel">
+        <PropertyRef Name="IdNivel" />
+      </Principal>
+      <Dependent Role="Curricula">
+        <PropertyRef Name="IdNivel" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CurriculaBaseCompetencia_AreaCurricular">
+    <End Role="AreaCurricular" Type="Self.AreaCurricular" Multiplicity="0..1" />
+    <End Role="CurriculaBaseCompetencia" Type="Self.CurriculaBaseCompetencia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AreaCurricular">
+        <PropertyRef Name="IdAreaCurricular" />
+      </Principal>
+      <Dependent Role="CurriculaBaseCompetencia">
+        <PropertyRef Name="IdAreaCurricular" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CurriculaBaseCompetencia_Competencia">
+    <End Role="Competencia" Type="Self.Competencia" Multiplicity="1" />
+    <End Role="CurriculaBaseCompetencia" Type="Self.CurriculaBaseCompetencia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Competencia">
+        <PropertyRef Name="IdCompetencia" />
+      </Principal>
+      <Dependent Role="CurriculaBaseCompetencia">
+        <PropertyRef Name="IdCompetencia" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CurriculaBaseCompetencia_CurriculaBase">
+    <End Role="CurriculaBase" Type="Self.CurriculaBase" Multiplicity="1" />
+    <End Role="CurriculaBaseCompetencia" Type="Self.CurriculaBaseCompetencia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CurriculaBase">
+        <PropertyRef Name="IdCurriculaBase" />
+      </Principal>
+      <Dependent Role="CurriculaBaseCompetencia">
+        <PropertyRef Name="IdCurriculaBase" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Curso_AreaCurricular">
+    <End Role="AreaCurricular" Type="Self.AreaCurricular" Multiplicity="1" />
+    <End Role="Curso" Type="Self.Curso" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AreaCurricular">
+        <PropertyRef Name="IdAreaCurricular" />
+      </Principal>
+      <Dependent Role="Curso">
+        <PropertyRef Name="IdAreaCurricular" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Curso_Grado">
+    <End Role="Grado" Type="Self.Grado" Multiplicity="1" />
+    <End Role="Curso" Type="Self.Curso" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Grado">
+        <PropertyRef Name="IdGrado" />
+      </Principal>
+      <Dependent Role="Curso">
+        <PropertyRef Name="IdGrado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetalleCurricula_Competencia">
+    <End Role="Competencia" Type="Self.Competencia" Multiplicity="1" />
+    <End Role="DetalleCurricula" Type="Self.DetalleCurricula" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Competencia">
+        <PropertyRef Name="IdCompetencia" />
+      </Principal>
+      <Dependent Role="DetalleCurricula">
+        <PropertyRef Name="IdCompetencia" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetalleCurricula_Curricula">
+    <End Role="Curricula" Type="Self.Curricula" Multiplicity="1" />
+    <End Role="DetalleCurricula" Type="Self.DetalleCurricula" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Curricula">
+        <PropertyRef Name="IdCurricula" />
+      </Principal>
+      <Dependent Role="DetalleCurricula">
+        <PropertyRef Name="IdCurricula" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DocenteCurso_Curso">
+    <End Role="Curso" Type="Self.Curso" Multiplicity="1" />
+    <End Role="DocenteCurso" Type="Self.DocenteCurso" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Curso">
+        <PropertyRef Name="IdCurso" />
+      </Principal>
+      <Dependent Role="DocenteCurso">
+        <PropertyRef Name="IdCurso" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DocenteCurso_Docente">
+    <End Role="Docente" Type="Self.Docente" Multiplicity="1" />
+    <End Role="DocenteCurso" Type="Self.DocenteCurso" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Docente">
+        <PropertyRef Name="IdDocente" />
+      </Principal>
+      <Dependent Role="DocenteCurso">
+        <PropertyRef Name="IdDocente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Grado_Nivel">
+    <End Role="Nivel" Type="Self.Nivel" Multiplicity="1" />
+    <End Role="Grado" Type="Self.Grado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Nivel">
+        <PropertyRef Name="IdNivel" />
+      </Principal>
+      <Dependent Role="Grado">
+        <PropertyRef Name="IdNivel" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PlanEstudiosBase_CurriculaBaseCompetencia">
+    <End Role="CurriculaBaseCompetencia" Type="Self.CurriculaBaseCompetencia" Multiplicity="1" />
+    <End Role="PlanEstudiosBase" Type="Self.PlanEstudiosBase" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CurriculaBaseCompetencia">
+        <PropertyRef Name="IdCurriculaBaseCompetencia" />
+      </Principal>
+      <Dependent Role="PlanEstudiosBase">
+        <PropertyRef Name="IdCurriculaBaseCompetencia" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PlanEstudiosBase_Curso">
+    <End Role="Curso" Type="Self.Curso" Multiplicity="1" />
+    <End Role="PlanEstudiosBase" Type="Self.PlanEstudiosBase" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Curso">
+        <PropertyRef Name="IdCurso" />
+      </Principal>
+      <Dependent Role="PlanEstudiosBase">
+        <PropertyRef Name="IdCurso" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="InnovaModelStoreContainer">
+    <EntitySet Name="AreaCurricular" EntityType="Self.AreaCurricular" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Capacidad" EntityType="Self.Capacidad" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Competencia" EntityType="Self.Competencia" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Curricula" EntityType="Self.Curricula" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CurriculaBase" EntityType="Self.CurriculaBase" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CurriculaBaseCompetencia" EntityType="Self.CurriculaBaseCompetencia" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Curso" EntityType="Self.Curso" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DetalleCurricula" EntityType="Self.DetalleCurricula" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Docente" EntityType="Self.Docente" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DocenteCurso" EntityType="Self.DocenteCurso" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Grado" EntityType="Self.Grado" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Nivel" EntityType="Self.Nivel" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PlanEstudiosBase" EntityType="Self.PlanEstudiosBase" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Capacidad_Competencia" Association="Self.FK_Capacidad_Competencia">
+      <End Role="Competencia" EntitySet="Competencia" />
+      <End Role="Capacidad" EntitySet="Capacidad" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Curricula_CurriculaBase" Association="Self.FK_Curricula_CurriculaBase">
+      <End Role="CurriculaBase" EntitySet="CurriculaBase" />
+      <End Role="Curricula" EntitySet="Curricula" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Curricula_Nivel" Association="Self.FK_Curricula_Nivel">
+      <End Role="Nivel" EntitySet="Nivel" />
+      <End Role="Curricula" EntitySet="Curricula" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CurriculaBaseCompetencia_AreaCurricular" Association="Self.FK_CurriculaBaseCompetencia_AreaCurricular">
+      <End Role="AreaCurricular" EntitySet="AreaCurricular" />
+      <End Role="CurriculaBaseCompetencia" EntitySet="CurriculaBaseCompetencia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CurriculaBaseCompetencia_Competencia" Association="Self.FK_CurriculaBaseCompetencia_Competencia">
+      <End Role="Competencia" EntitySet="Competencia" />
+      <End Role="CurriculaBaseCompetencia" EntitySet="CurriculaBaseCompetencia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CurriculaBaseCompetencia_CurriculaBase" Association="Self.FK_CurriculaBaseCompetencia_CurriculaBase">
+      <End Role="CurriculaBase" EntitySet="CurriculaBase" />
+      <End Role="CurriculaBaseCompetencia" EntitySet="CurriculaBaseCompetencia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Curso_AreaCurricular" Association="Self.FK_Curso_AreaCurricular">
+      <End Role="AreaCurricular" EntitySet="AreaCurricular" />
+      <End Role="Curso" EntitySet="Curso" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Curso_Grado" Association="Self.FK_Curso_Grado">
+      <End Role="Grado" EntitySet="Grado" />
+      <End Role="Curso" EntitySet="Curso" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetalleCurricula_Competencia" Association="Self.FK_DetalleCurricula_Competencia">
+      <End Role="Competencia" EntitySet="Competencia" />
+      <End Role="DetalleCurricula" EntitySet="DetalleCurricula" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetalleCurricula_Curricula" Association="Self.FK_DetalleCurricula_Curricula">
+      <End Role="Curricula" EntitySet="Curricula" />
+      <End Role="DetalleCurricula" EntitySet="DetalleCurricula" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DocenteCurso_Curso" Association="Self.FK_DocenteCurso_Curso">
+      <End Role="Curso" EntitySet="Curso" />
+      <End Role="DocenteCurso" EntitySet="DocenteCurso" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DocenteCurso_Docente" Association="Self.FK_DocenteCurso_Docente">
+      <End Role="Docente" EntitySet="Docente" />
+      <End Role="DocenteCurso" EntitySet="DocenteCurso" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Grado_Nivel" Association="Self.FK_Grado_Nivel">
+      <End Role="Nivel" EntitySet="Nivel" />
+      <End Role="Grado" EntitySet="Grado" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PlanEstudiosBase_CurriculaBaseCompetencia" Association="Self.FK_PlanEstudiosBase_CurriculaBaseCompetencia">
+      <End Role="CurriculaBaseCompetencia" EntitySet="CurriculaBaseCompetencia" />
+      <End Role="PlanEstudiosBase" EntitySet="PlanEstudiosBase" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PlanEstudiosBase_Curso" Association="Self.FK_PlanEstudiosBase_Curso">
+      <End Role="Curso" EntitySet="Curso" />
+      <End Role="PlanEstudiosBase" EntitySet="PlanEstudiosBase" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
